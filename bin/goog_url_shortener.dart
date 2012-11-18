@@ -56,7 +56,7 @@ class UrlShortener {
     Directory directory = new Directory.current();
     processOptions.workingDirectory = directory.path;
     processOptions.environment = new Map();
-    print("$curlPath $processArgs");
+    //print("$curlPath $processArgs");
     Process.run(curlPath, processArgs, processOptions)
     ..handleException((error) {
       print("Error: $error");
