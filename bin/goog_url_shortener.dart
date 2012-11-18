@@ -37,9 +37,9 @@ class UrlShortener {
   final String key;
   final String curlPath;
   
-  UrlShortener({this.url: "http://www.google.com", this.command: "shorten", this.key: null, this.curlPath: "curl"});
+  UrlShortener({this.url: "http://www.google.com", this.command: "shorten", this.key: '', this.curlPath: "curl"});
   
-  execute() {
+  Future execute() {
     switch(command) {
       case SHORTEN:
         return shorten();
@@ -48,6 +48,8 @@ class UrlShortener {
       case ANALYTICS:
         return analytics();
     }
+    
+    throw new Error();
   }
   
   Future executeCurl(List<String> processArgs) {
@@ -56,7 +58,7 @@ class UrlShortener {
     Directory directory = new Directory.current();
     processOptions.workingDirectory = directory.path;
     processOptions.environment = new Map();
-    //print("$curlPath $processArgs");
+    print("$curlPath $processArgs");
     Process.run(curlPath, processArgs, processOptions)
     ..handleException((error) {
       print("Error: $error");
@@ -70,18 +72,21 @@ class UrlShortener {
   }
   
   Future shorten() {
-    var args = [googUrl, "-H", 'Content-Type: application/json',
+    var keyParam = key.isEmpty ? "" : "?&key=$key";
+    var args = ["$googUrl$keyParam", "-H", 'Content-Type: application/json',
                  "-d", JSON.stringify({"longUrl": url})];
     return executeCurl(args);
   }
   
   Future expand() {
-    var args = ["$googUrl?shortUrl=$url"];
+    var keyParam = key.isEmpty ? "" : "&key=$key";
+    var args = ["$googUrl?shortUrl=$url$keyParam"];
     return executeCurl(args);
   }
   
   Future analytics() {
-    var args = ["$googUrl?shortUrl=$url&projection=FULL"];
+    var keyParam = key.isEmpty ? "" : "&key=$key";
+    var args = ["$googUrl?shortUrl=$url&projection=FULL$keyParam"];
     return executeCurl(args);
   }
 }
@@ -93,13 +98,12 @@ void main() {
   
   argParser.addOption('key', abbr: 'k',
       help: 'google api key', 
-      defaultsTo: null);
+      defaultsTo: '');
   
   argParser.addOption('url', abbr: 'u',
       help: 'url',
       defaultsTo: "http://www.google.com");
   
-  /* these are exclusive */
   argParser.addOption('type', abbr: 't',
       allowed: [UrlShortener.SHORTEN, UrlShortener.EXPAND, UrlShortener.ANALYTICS],
       help: "type of action to execute",
@@ -122,9 +126,9 @@ void main() {
   var type = args['type'];
   
   UrlShortener urlShortener = new UrlShortener(url: url,
-      command: type,
-      key: key,
-      curlPath: curl);
+                                               command: type,
+                                               key: key,
+                                               curlPath: curl);
   Future f = urlShortener.execute();
   f.handleException((error) {
     print("error: $error");
