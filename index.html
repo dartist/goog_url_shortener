@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Goog Url Shortener by financeCoding</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Goog Url Shortener</h1>
+        <h2>Small url shortener library and application using dart and google shortener api</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/financeCoding/goog_url_shortener/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/financeCoding/goog_url_shortener/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/financeCoding/goog_url_shortener" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>Google Url Shortener in Dart</h1>
+
+<p>A small library and application that shortens and expands urls using dart and google shortener apis.</p>
+
+<h2>Usage</h2>
+
+<h3>Library</h3>
+
+<p>Installing from <a href="http://pub.dartlang.org">pub.dartlang.org</a> apply the following to pubspec.yaml </p>
+
+<pre><code>dependencies:
+  goog_url_shortener: any
+</code></pre>
+
+<p>Installing from <a href="https://github.com/financeCoding/goog_url_shortener">this</a> git repo apply the following to pubspec.yaml</p>
+
+<pre><code>dependencies:
+  goog_url_shortener: 
+    git: git://github.com/financeCoding/goog_url_shortener.git
+</code></pre>
+
+<p>Importing the library</p>
+
+<pre><code>import 'package:goog_url_shortener/goog_url_shortener_console.dart';
+</code></pre>
+
+<p>Example of calling the shortener</p>
+
+<pre><code>  initializeSSL();
+  UrlShortener urlShortener = new UrlShortener(url: url,
+                                               command: type,
+                                               key: key);
+  var furture = urlShortener.execute(); 
+  furture.then((Map data) {
+    print('Long Url = ${data["longUrl"]}');
+    print('Short Url = ${data["id"]}')
+  });                                         
+</code></pre>
+
+<p>Using this code as library a pkcert database needs to be set for the <code>SecureSocket</code> to function properly. The following function could be implemented that passes the directory location of the pkcert's</p>
+
+<pre><code>/**
+ * Setup the certificate database for the client. 
+ */
+void initializeSSL() {
+  var testPkcertDatabase =
+      new Path.fromNative(new Options().script).directoryPath.append('pkcert/');
+  SecureSocket.setCertificateDatabase(testPkcertDatabase.toNativePath());
+}
+</code></pre>
+
+<h3>Tool</h3>
+
+<p>The <code>goog_url_shortener.dart</code> in <code>bin/</code> could be used as a standalone commandline tool for shortening or expanding urls. </p>
+
+<h6>Shorten a url</h6>
+
+<pre><code>$ ./bin/goog_url_shortener.dart -u http://www.dartlang.org -t shorten
+Long Url = http://www.dartlang.org/
+Short Url = http://goo.gl/8l3PM
+</code></pre>
+
+<h6>Expand url</h6>
+
+<pre><code>$ ./bin/goog_url_shortener.dart -u http://goo.gl/8l3PM -t expand
+Long Url = http://www.dartlang.org/
+Short Url = http://goo.gl/8l3PM
+</code></pre>
+
+<h6>Help</h6>
+
+<pre><code>$ ./bin/goog_url_shortener.dart -h
+-c, --curl               absolute path for curl
+                         (defaults to "curl")
+
+-k, --key                google api key
+-u, --url                url
+                         (defaults to "http://www.google.com")
+
+-t, --type               type of action to execute
+
+          [analytics]    analytics for the url
+          [expand]       expand the url
+          [shorten]      shorten the url
+
+-h, --help               help
+
+</code></pre>
+
+<h2>TODO</h2>
+
+<p>Add an example of creating a cert database.</p>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-33800934-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
