@@ -3,3 +3,5 @@ description:  Simple url shortener using google shortener api and curl
 dependencies:
   args:
     sdk: args
+  logging:
+    sdk: logging
