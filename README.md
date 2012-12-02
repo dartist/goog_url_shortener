@@ -3,6 +3,9 @@ Google Url Shortener in Dart
 
 A small library and application that shortens and expands urls using dart and google shortener apis.
 
+[![](https://drone.io/adam/goog_url_shortener/status.png)](https://drone.io/adam/goog_url_shortener/latest)
+
+
 Usage
 ----
 
