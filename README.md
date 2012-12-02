@@ -1,36 +1,83 @@
 Google Url Shortener in Dart
 ====
 
-Simple application that shortens and expands urls using dart, curl and google shortener apis.
+A small library and application that shortens and expands urls using dart and google shortener apis.
 
 Usage
 ----
-Shorten a url
+
+### Library
+
+Installing from [pub.dartlang.org](http://pub.dartlang.org) apply the following to pubspec.yaml 
+
+```
+dependencies:
+  goog_url_shortener: any
+```
+
+Installing from [this](https://github.com/financeCoding/goog_url_shortener) git repo apply the following to pubspec.yaml
+
+```
+dependencies:
+  goog_url_shortener: 
+  	git: git://github.com/financeCoding/goog_url_shortener.git
+```
+
+Importing the library
+
+```
+import 'package:goog_url_shortener/goog_url_shortener_console.dart';
+```
+
+Example of calling the shortener
+
+```
+  initializeSSL();
+  UrlShortener urlShortener = new UrlShortener(url: url,
+                                               command: type,
+                                               key: key);
+  var furture = urlShortener.execute(); 
+  furture.then((Map data) {
+    print('Long Url = ${data["longUrl"]}');
+    print('Short Url = ${data["id"]}')
+  });                                         
+```
+
+Using this code as library a pkcert database needs to be set for the `SecureSocket` to function properly. The following function could be implemented that passes the directory location of the pkcert's
+
+```
+/**
+ * Setup the certificate database for the client. 
+ */
+void initializeSSL() {
+  var testPkcertDatabase =
+      new Path.fromNative(new Options().script).directoryPath.append('pkcert/');
+  SecureSocket.setCertificateDatabase(testPkcertDatabase.toNativePath());
+}
+```
+
+### Tool
+
+The `goog_url_shortener.dart` in `bin/` could be used as a standalone commandline tool for shortening or expanding urls. 
+
+###### Shorten a url
 
 ```
 $ ./bin/goog_url_shortener.dart -u http://www.dartlang.org -t shorten
-{
- "kind": "urlshortener#url",
- "id": "http://goo.gl/8l3PM",
- "longUrl": "http://www.dartlang.org/"
-}
+Long Url = http://www.dartlang.org/
+Short Url = http://goo.gl/8l3PM
 ```
 
-Expand url
-
+###### Expand url
 
 ```
 $ ./bin/goog_url_shortener.dart -u http://goo.gl/8l3PM -t expand
-{
- "kind": "urlshortener#url",
- "id": "http://goo.gl/8l3PM",
- "longUrl": "http://www.dartlang.org/",
- "status": "OK"
-}
+Long Url = http://www.dartlang.org/
+Short Url = http://goo.gl/8l3PM
 ```
 
-Help
-----
+###### Help
+
 ```
 $ ./bin/goog_url_shortener.dart -h
 -c, --curl               absolute path for curl
@@ -51,5 +98,5 @@ $ ./bin/goog_url_shortener.dart -h
 ```
 
 TODO
----
-Add the google api `key` when argument is present. 
+----
+Add an example of creating a cert database.
