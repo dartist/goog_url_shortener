@@ -1,7 +1,12 @@
 name:  goog_url_shortener
-description:  Simple url shortener using google shortener api and curl
+description:  A console based url shortener using google shortener api
+version: 0.0.1
+author: Adam Singer <financeCoding@gmail.com>
+homepage: http://financeCoding.github.com/goog_url_shortener
 dependencies:
   args:
     sdk: args
   logging:
     sdk: logging
+  unittest: 
+    sdk: unittest
