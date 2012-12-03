@@ -9,17 +9,8 @@ import 'analytics_tests.dart';
 import 'expand_tests.dart';
 import 'shorten_tests.dart';
 
-/**
- * Setup the certificate database for the client. 
- */
-void initializeSSL() {
-  var testPkcertDatabase =
-      new Path.fromNative(new Options().script).directoryPath.append('pkcert/');
-  SecureSocket.setCertificateDatabase(testPkcertDatabase.toNativePath());
-}
-
 void main() {
-  initializeSSL();
+  SecureSocket.initialize();
   new AnalyticsTests().run();
   new ExpandTests().run();
   new ShortenTests().run();

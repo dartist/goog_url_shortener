@@ -9,15 +9,6 @@ import 'package:goog_url_shortener/goog_url_shortener.dart';
 
 Logger logger; 
 
-/**
- * Setup the certificate database for the client. 
- */
-void initializeSSL() {
-  var testPkcertDatabase =
-      new Path.fromNative(new Options().script).directoryPath.append('pkcert/');
-  SecureSocket.setCertificateDatabase(testPkcertDatabase.toNativePath());
-}
-
 void main() {
   logger = new Logger("main");
   Logger.root.on.record.add((LogRecord r)=>print(r.message.toString()));
@@ -60,7 +51,7 @@ void main() {
   var url = args['url'];
   var type = args['type'];
   logger.finest("new UrlShortener(key: $key, url: $url, type: $type);");
-  initializeSSL();
+  SecureSocket.initialize();
   UrlShortener urlShortener = new UrlShortener(url: url,
                                                command: type,
                                                key: key);

@@ -35,7 +35,7 @@ import 'package:goog_url_shortener/goog_url_shortener.dart';
 Example of calling the shortener
 
 ```
-  initializeSSL();
+  SecureSocket.initialize();
   UrlShortener urlShortener = new UrlShortener(url: url,
                                                command: type,
                                                key: key);
@@ -46,18 +46,7 @@ Example of calling the shortener
   });                                         
 ```
 
-Using this code as library a pkcert database needs to be set for the `SecureSocket` to function properly. The following function could be implemented that passes the directory location of the pkcert's
-
-```
-/**
- * Setup the certificate database for the client. 
- */
-void initializeSSL() {
-  var testPkcertDatabase =
-      new Path.fromNative(new Options().script).directoryPath.append('pkcert/');
-  SecureSocket.setCertificateDatabase(testPkcertDatabase.toNativePath());
-}
-```
+`SecureSocket.initialize()` needs to be called to set the built in client certificates for the socket.
 
 ### Tool
 
