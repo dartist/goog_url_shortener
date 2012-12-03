@@ -29,7 +29,7 @@ dependencies:
 Importing the library
 
 ```
-import 'package:goog_url_shortener/goog_url_shortener_console.dart';
+import 'package:goog_url_shortener/goog_url_shortener.dart';
 ```
 
 Example of calling the shortener

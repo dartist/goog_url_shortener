@@ -5,7 +5,7 @@ import 'dart:uri';
 import 'dart:json';
 import 'package:args/args.dart';
 import 'package:logging/logging.dart';
-import 'package:goog_url_shortener/goog_url_shortener_console.dart';
+import 'package:goog_url_shortener/goog_url_shortener.dart';
 
 Logger logger; 
 

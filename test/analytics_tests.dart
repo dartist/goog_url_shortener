@@ -1,7 +1,7 @@
 library analytics_tests;
 
 import 'package:unittest/unittest.dart';
-import 'package:goog_url_shortener/goog_url_shortener_console.dart';
+import 'package:goog_url_shortener/goog_url_shortener.dart';
 
 class AnalyticsTests {
   void run() {
